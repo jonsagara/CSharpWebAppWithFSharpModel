@@ -1,6 +1,6 @@
 # .NET 7.0 RC2 breaks MVC build where a view references an F# model
 
-When I upgraded my project to .NET SDK `7.0.100-rc.2.22477.23`, my build started failing in `Release` mode. I only noticed this because my DevOps build started failing.
+When I upgraded my project to .NET SDK `7.0.100-rc.2.22477.23`, my build started failing in `Release` mode. I only noticed this because the build step of my DevOps pipeline started failing.
 
 ## Description of bug
 
@@ -55,10 +55,8 @@ My environment:
 
 1. Clone the repository at https://github.com/jonsagara/CSharpWebAppWithFSharpModel
 1. Check out the `net6` branch
-1. Do one of the following
-   - In Visual Studio, ensure the `Release` build configuration is selected, and build the solution.
-   - -OR-
-   - Open a command prompt in the root directory and issue the following command: `dotnet.exe build src\WebApp\WebApp.csproj --configuration Release `
+1. Run the `remove_bin_obj.bat` batch file to remove any `bin` and `obj` subdirectories
+1. Open a command prompt in the root directory and issue the following command: `dotnet.exe build src\WebApp\WebApp.csproj --configuration Release `
 
 ### Expected results:
 
@@ -72,10 +70,8 @@ The solution builds successfully.
 
 1. Clone the repository at https://github.com/jonsagara/CSharpWebAppWithFSharpModel
 1. Check out the `net7` branch
-1. Do one of the following
-   - In Visual Studio, ensure the `Release` build configuration is selected, and build the solution.
-   - -OR-
-   - Open a command prompt in the root directory and issue the following command: `dotnet.exe build src\WebApp\WebApp.csproj --configuration Release `
+1. Run the `remove_bin_obj.bat` batch file to remove any `bin` and `obj` subdirectories
+1. Open a command prompt in the root directory and issue the following command: `dotnet.exe build src\WebApp\WebApp.csproj --configuration Release `
 
 ### Expected results:
 
@@ -101,6 +97,42 @@ C:\Dev\SANDBOX\CSharpWebAppWithFSharpModel\src\WebApp\Views\Home\Index.cshtml(10
 
 Time Elapsed 00:00:06.17
 ```
+
+### The `Domain` module in the F# project
+
+Interestingly, if I comment out the `School` record in `FSharpClassLibrary\Domain.fs` and re-run the build command, the build succeeds:
+
+```fsharp
+module internal Domain =
+    ()
+    
+    ///// Name of a learning institution.
+    //type School = {
+    //    Name : string
+    //}
+```
+
+
+```
+MSBuild version 17.4.0-preview-22470-08+6521b1591 for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Program Files\dotnet\sdk\7.0.100-rc.2.22477.23\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NETRuntimeIdentifierInference.targets(257,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\Dev\SANDBOX\CSharpWebAppWithFSharpModel\src\WebApp\WebApp.csproj]
+  FSharpClassLibrary -> C:\Dev\SANDBOX\CSharpWebAppWithFSharpModel\src\FSharpClassLibrary\bin\Release\net7.0\FSharpClassLibrary.dll
+  WebApp -> C:\Dev\SANDBOX\CSharpWebAppWithFSharpModel\src\WebApp\bin\Release\net7.0\WebApp.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.30
+```
+
+But as soon as I uncomment the `School` record, the build error returns.
+
+Also of note, if I clean and build the solution from within Visual Studio, I get no error, but since the DevOps pipeline runs a `dotnet build` command, that's what I'm doing here.
+
+---
 
 I'm not sure if this is an ASP.NET Core issue, a .NET SDK issue, an MSBuild issue, or some other issue. If this is not the correct repository, will you please help me find the correct one?
 
