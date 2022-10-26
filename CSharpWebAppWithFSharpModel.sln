@@ -3,13 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33020.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "src\WebApp\WebApp.csproj", "{665E5F3B-A240-48F2-A9F6-C6A3CFC74002}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "src\WebApp\WebApp.csproj", "{665E5F3B-A240-48F2-A9F6-C6A3CFC74002}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpClassLibrary", "src\FSharpClassLibrary\FSharpClassLibrary.fsproj", "{98964608-DCA9-4F4A-8722-7D4FA8865608}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharpClassLibrary", "src\FSharpClassLibrary\FSharpClassLibrary.fsproj", "{98964608-DCA9-4F4A-8722-7D4FA8865608}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{FD8C64AC-F56C-4F1C-8C02-0D1C0126E528}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
