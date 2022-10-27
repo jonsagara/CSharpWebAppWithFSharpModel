@@ -1,3 +1,11 @@
+# UPDATE 2022-10-27
+
+[GitHub Issue](https://github.com/dotnet/aspnetcore/issues/44749)
+
+The fix will be released with [.NET 7.0 RTM](https://github.com/dotnet/aspnetcore/issues/44749#issuecomment-1293867468).
+
+Until then, there is a [workaround](https://github.com/dotnet/fsharp/issues/14088#issuecomment-1275845376).
+
 # .NET 7.0 RC2 breaks MVC build where a view references an F# model
 
 When I upgraded my project to .NET SDK `7.0.100-rc.2.22477.23`, my build started failing in `Release` mode. I only noticed this because the build step of my DevOps pipeline started failing.
